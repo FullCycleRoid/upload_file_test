@@ -2,7 +2,6 @@ from __future__ import absolute_import, unicode_literals
 
 from celery import shared_task
 from core.settings import supported_extensions
-from .exception import ExtensionException
 
 from .handlers import compress_video, resize_image, text_analysis
 from .models import FileModel
