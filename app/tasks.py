@@ -41,6 +41,7 @@ def process_file(file_id):
     else:
         raise Exception("File type not supported. Process Failed")
 
+
     record.processed = True
     record.save()
 
