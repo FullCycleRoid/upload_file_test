@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from app.models import FileModel
+from core.settings import supported_extensions
 
 
 class FileUploadSerializer(ModelSerializer):
@@ -9,14 +10,18 @@ class FileUploadSerializer(ModelSerializer):
         model = FileModel
         exclude = ['processed', 'uploaded_at']
 
-    def validate(self, data):
+    def validate_file(self, value):
         """
         Check that start is before finish.
         """
-        ext = data['file'].name.split('.')[-1]
-        # if ext not in :
-        #     raise serializers.ValidationError("finish must occur after start")
-        return data
+        file_ext = value.name.split('.')[-1]
+
+        all_extensions = supported_extensions['video'] + supported_extensions['text'] + supported_extensions['image']
+        if file_ext not in all_extensions:
+            raise serializers.ValidationError("File type not supported. Uploaded Failed")
+
+        return value
+
 
 class FileListSerializer(ModelSerializer):
     class Meta:

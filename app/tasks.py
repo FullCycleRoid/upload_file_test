@@ -17,14 +17,11 @@ def process_file(file_id):
     if ext in supported_extensions['video']:
         compress_video(record.file)
 
-    elif ext in supported_extensions['image']:
+    if ext in supported_extensions['image']:
         resize_image(record.file)
 
-    elif ext in supported_extensions['text']:
+    if ext in supported_extensions['text']:
         text_analysis(record.file)
-
-    else:
-        raise ExtensionException("File type not supported. Process Failed")
 
     record.processed = True
     record.save()
