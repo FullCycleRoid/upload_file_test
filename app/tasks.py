@@ -1,11 +1,11 @@
 from __future__ import absolute_import, unicode_literals
 
 from celery import shared_task
-
 from core.settings import supported_extensions
+from core.celery import app
+
+from .handlers import compress_video, resize_image, text_analysis
 from .models import FileModel
-from core.celery import app 
-import time
 
 
 @app.task
@@ -43,33 +43,3 @@ def process_file(file_id):
 
     record.processed = True
     record.save()
-
-
-def compress_video(filename):
-    try:
-        print(f'Video: {filename} compressed')
-        return
-
-    # handle some compress video errors
-    except Exception as e:
-        raise Exception(e)
-
-
-def resize_image(filename):
-    try:
-        print(f'Image: {filename} resized')
-        return
-
-    # handle some resize image errors
-    except Exception as e:
-        raise Exception(e)
-
-
-def text_analysis(filename):
-    try:
-        print(f'text: {filename} analyzed')
-        return
-
-    # handle some text analysis errors
-    except Exception as e:
-        raise Exception(e)
