@@ -6,7 +6,6 @@ def compress_video(filepath):
         print(f'Video: {filepath} compressed')
         return
 
-    # handle some compress video errors
     except CompressException as e:
         raise CompressException(e)
 
@@ -16,7 +15,6 @@ def resize_image(filepath):
         print(f'Image: {filepath} resized')
         return
 
-    # handle some resize image errors
     except ResizeException as e:
         raise ResizeException(e)
 
@@ -26,6 +24,5 @@ def text_analysis(filepath):
         print(f'text: {filepath} analyzed')
         return
 
-    # handle some text analysis errors
     except AnalysisException as e:
         raise AnalysisException(e)
