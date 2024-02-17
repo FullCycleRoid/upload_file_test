@@ -50,7 +50,7 @@ def compress_video(filename):
         print(f'Video: {filename} compressed')
         return
 
-    # handle some compress errors
+    # handle some compress video errors
     except Exception as e:
         raise Exception(e)
 
@@ -60,7 +60,7 @@ def resize_image(filename):
         print(f'Image: {filename} resized')
         return
 
-    # handle some resize errors
+    # handle some resize image errors
     except Exception as e:
         raise Exception(e)
 
@@ -70,6 +70,6 @@ def text_analysis(filename):
         print(f'text: {filename} analyzed')
         return
 
-    # handle some analysis errors
+    # handle some text analysis errors
     except Exception as e:
         raise Exception(e)
