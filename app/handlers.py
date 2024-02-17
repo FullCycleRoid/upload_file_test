@@ -1,6 +1,6 @@
-def compress_video(filename):
+def compress_video(filepath):
     try:
-        print(f'Video: {filename} compressed')
+        print(f'Video: {filepath} compressed')
         return
 
     # handle some compress video errors
@@ -8,9 +8,9 @@ def compress_video(filename):
         raise Exception(e)
 
 
-def resize_image(filename):
+def resize_image(filepath):
     try:
-        print(f'Image: {filename} resized')
+        print(f'Image: {filepath} resized')
         return
 
     # handle some resize image errors
@@ -18,9 +18,9 @@ def resize_image(filename):
         raise Exception(e)
 
 
-def text_analysis(filename):
+def text_analysis(filepath):
     try:
-        print(f'text: {filename} analyzed')
+        print(f'text: {filepath} analyzed')
         return
 
     # handle some text analysis errors
