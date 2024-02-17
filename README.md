@@ -45,7 +45,7 @@ Follow these steps to set up and run the project:
 1. Start the Docker containers:
 
    ```bash
-   docker-compose up
+   docker compose up
    ```
 
    - To run the containers in detached mode, use `docker-compose up -d`.
@@ -53,13 +53,13 @@ Follow these steps to set up and run the project:
 2. Build the Docker images (if needed):
 
    ```bash
-   docker-compose build
+   docker compose build
    ```
 
 3. To run just the Django application:
 
    ```bash
-   docker-compose run django
+   docker compose run django
    ```
 
 4. Access the Django admin interface:
@@ -70,7 +70,7 @@ Follow these steps to set up and run the project:
 5. To access the Django container's shell:
 
    ```bash
-   docker-compose exec django bash
+   docker compose exec django bash
    ```
 
 6. Perform GET requests to the API with query parameters `n` and `m`:

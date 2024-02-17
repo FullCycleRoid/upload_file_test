@@ -1,8 +1,12 @@
 from __future__ import absolute_import, unicode_literals
 
 from celery import shared_task
+
+from core.settings import supported_extensions
+from .models import FileModel
 from core.celery import app 
 import time
+
 
 @app.task
 def fibonacci(n):
@@ -18,34 +22,54 @@ def fibonacci(n):
             fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
         return ', '.join(map(str, fib_sequence))
 
+
 @shared_task
-def factorial(n):
-    if n < 0:
-        return "Invalid input"
-    elif n == 0 or n == 1:
-        return "1"
+def process_file(file_id):
+
+    record = FileModel.objects.get(pk=file_id)
+    ext = str(record.file).split('.')[-1]
+
+    if ext in supported_extensions['video']:
+        compress_video(record.file)
+
+    elif ext in supported_extensions['image']:
+        resize_image(record.file)
+
+    elif ext in supported_extensions['text']:
+        text_analysis(record.file)
+
     else:
-        result = 1
-        for i in range(2, n + 1):
-            result *= i
-        return str(result)
+        raise Exception("File type not supported. Process Failed")
 
-@shared_task
-def task_with_delay():
-    time.sleep(10)
-    return "Task with a runit 10-second delay completed"+str(time.time())
+    record.processed = True
+    record.save()
 
 
-@shared_task
-def get_name_rr():
-    time.sleep(10)
-    return "Task with get_name_rr comp."
+def compress_video(filename):
+    try:
+        print(f'Video: {filename} compressed')
+        return
+
+    # handle some compress errors
+    except Exception as e:
+        raise Exception(e)
 
 
+def resize_image(filename):
+    try:
+        print(f'Image: {filename} resized')
+        return
 
-@shared_task
-def add(x, y):
-    return x + y
+    # handle some resize errors
+    except Exception as e:
+        raise Exception(e)
 
 
+def text_analysis(filename):
+    try:
+        print(f'text: {filename} analyzed')
+        return
 
+    # handle some analysis errors
+    except Exception as e:
+        raise Exception(e)
