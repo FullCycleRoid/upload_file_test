@@ -1,0 +1,2 @@
+class ExtensionException(Exception):
+    pass

@@ -2,6 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 from celery import shared_task
 from core.settings import supported_extensions
+from .exception import ExtensionException
 
 from .handlers import compress_video, resize_image, text_analysis
 from .models import FileModel
@@ -23,7 +24,7 @@ def process_file(file_id):
         text_analysis(record.file)
 
     else:
-        raise Exception("File type not supported. Process Failed")
+        raise ExtensionException("File type not supported. Process Failed")
 
     record.processed = True
     record.save()
