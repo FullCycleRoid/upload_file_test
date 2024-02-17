@@ -21,8 +21,10 @@ class UploadView(APIView):
 
     def post(self, request):
 
-        file = request.FILES.get('file', None)
-        instance = FileModel(processed=False, uploaded_at=datetime.now(), file=file)
+        serializer = FileUploadSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        instance = FileModel(processed=False, uploaded_at=datetime.now(), file=request.FILES.get('file'))
         instance.save()
 
         # Call the Celery task
