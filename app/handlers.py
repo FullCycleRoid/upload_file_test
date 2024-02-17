@@ -1,11 +1,14 @@
+from app.exception import AnalysisException, ResizeException, CompressException
+
+
 def compress_video(filepath):
     try:
         print(f'Video: {filepath} compressed')
         return
 
     # handle some compress video errors
-    except Exception as e:
-        raise Exception(e)
+    except CompressException as e:
+        raise CompressException(e)
 
 
 def resize_image(filepath):
@@ -14,8 +17,8 @@ def resize_image(filepath):
         return
 
     # handle some resize image errors
-    except Exception as e:
-        raise Exception(e)
+    except ResizeException as e:
+        raise ResizeException(e)
 
 
 def text_analysis(filepath):
@@ -24,5 +27,5 @@ def text_analysis(filepath):
         return
 
     # handle some text analysis errors
-    except Exception as e:
-        raise Exception(e)
+    except AnalysisException as e:
+        raise AnalysisException(e)
