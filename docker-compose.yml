@@ -1,6 +1,16 @@
 version: "3.8"
    
 services:
+    jekyll:
+        image: starefossen/github-pages
+        environment:
+            - "JEKYLL_GITHUB_TOKEN:123abc"
+        ports:
+            - "4000:4000"
+        volumes:
+            - ./:/usr/src/app
+        tty: true
+
     django:
         build: .
         container_name: django
@@ -43,7 +53,7 @@ services:
         volumes:
             - pgdata:/var/lib/postgresql/data/
         ports:
-            - "5432:5432"
+            - "7432:5432"
     redis:
         image: "redis:alpine"
         
