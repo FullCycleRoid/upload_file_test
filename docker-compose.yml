@@ -8,10 +8,11 @@ services:
                 bash -c "python manage.py makemigrations &&
                             python manage.py migrate &&
                             python manage.py runserver 0.0.0.0:8000"
+        tty: true
         volumes:
             - .:/usr/src/app/
-#        ports:
-#            - "8000:8000"
+        ports:
+            - "8000:8000"
         environment:
             - DEBUG=1
             - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 https://testupload-xuffjpf7.b4a.run [::1]
@@ -42,8 +43,8 @@ services:
             - POSTGRES_PASSWORD=postgres
         volumes:
             - pgdata:/var/lib/postgresql/data/
-#        ports:
-#            - "7432:5432"
+        ports:
+            - "5432:5432"
     redis:
         image: "redis:alpine"
         
