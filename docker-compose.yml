@@ -7,7 +7,7 @@ services:
         command: >
                 bash -c "python manage.py makemigrations &&
                             python manage.py migrate &&
-                            python manage.py runserver 0.0.0.0:8000"
+                            python manage.py runserver"
         tty: true
         volumes:
             - .:/usr/src/app/
@@ -15,7 +15,7 @@ services:
             - "8000:8000"
         environment:
             - DEBUG=1
-            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 https://testupload-xuffjpf7.b4a.run [::1]
+            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
             - CELERY_BROKER=redis://redis:6379/0
             - CELERY_BACKEND=redis://redis:6379/0
         depends_on:
