@@ -1,8 +1,0 @@
-repository: https://github.com/FullCycleRoid/upload_file_test
-
-gems:
-- jekyll-github-metadata
-- jekyll-mentions
-- jekyll-redirect-from
-- jekyll-sitemap
-- jemoji
