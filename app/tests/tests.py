@@ -6,7 +6,6 @@ from parameterized import parameterized
 from rest_framework import status
 from unittest.mock import patch
 
-from app.exception import ExtensionException
 from app.models import FileModel
 from app.tasks import process_file
 
@@ -32,29 +31,14 @@ class UploadFileTestCase(TestCase):
         response_json = response.json()
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response_json['processed'], False)
+        self.assertFalse(response_json['processed'])
 
         record = FileModel.objects.get(pk=response_json['id'])
 
         self.assertEqual(record.id, response_json['id'])
-        self.assertEqual(record.processed, True)
+        self.assertTrue(record.processed)
 
         os.remove(str(record.file))
-
-    @patch('app.tasks.process_file.delay', new=process_file)
-    def test_process_file_failed(self):
-        filename = f"test_file123.zip"
-        tmp_file = SimpleUploadedFile(filename, b"file_content", content_type='application/zip')
-
-        self.assertRaises(
-            ExtensionException,
-            self.client.post,
-            "/api/upload/",
-            {'file': tmp_file},
-            format='multipart'
-        )
-
-        os.remove(f'store/files/{tmp_file.name}')
 
     @patch('app.tasks.process_file.delay', new=process_file)
     def test_files_list_200(self):

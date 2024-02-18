@@ -22,19 +22,22 @@ class UploadView(APIView):
     def post(self, request):
 
         serializer = FileUploadSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        if serializer.is_valid(raise_exception=True):
 
-        instance = FileModel(processed=False, uploaded_at=datetime.now(), file=request.FILES.get('file'))
-        instance.save()
+            instance = FileModel(processed=False, uploaded_at=datetime.now(), file=request.FILES.get('file'))
+            instance.save()
 
-        # Call the Celery task
-        process_file.delay(file_id=instance.id)
+            # Call the Celery task
+            process_file.delay(file_id=instance.id)
 
-        return Response(
-            data={
-                'id':  instance.id,
-                'uploaded_at': instance.uploaded_at,
-                'processed': instance.processed,
-            },
-            status=status.HTTP_201_CREATED
-        )
+            return Response(
+                data={
+                    'id':  instance.id,
+                    'uploaded_at': instance.uploaded_at,
+                    'processed': instance.processed,
+                    'file': instance.file.name
+                },
+                status=status.HTTP_201_CREATED
+            )
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

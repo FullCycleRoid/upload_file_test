@@ -8,11 +8,12 @@ class FileUploadSerializer(ModelSerializer):
 
     class Meta:
         model = FileModel
+        # exclude fields from swagger
         exclude = ['processed', 'uploaded_at']
 
     def validate_file(self, value):
         """
-        Check that start is before finish.
+        Upload valid extension file only
         """
         file_ext = value.name.split('.')[-1]
 

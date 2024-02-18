@@ -1,7 +1,3 @@
-class ExtensionException(Exception):
-    pass
-
-
 class ResizeException(TypeError, ValueError, Exception):
     pass
 
